@@ -1,0 +1,585 @@
+<html lang="tr"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sevgilin İcardi'yi sevmiyorsa?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&amp;family=Open+Sans&amp;display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red: #ff4757;
+            --green: #2ed573;
+            --dark-red: #800000;
+            --light-green: #7bed9f;
+            --black: #0a0a0a;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--black);
+            color: var(--white);
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .container {
+            max-width: 100%;
+            height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            animation: pulse 2s infinite;
+            transform-origin: center;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1.2rem 2.5rem;
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            min-width: 220px;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-a {
+            background-color: var(--red);
+            color: var(--white);
+        }
+
+        .btn-b {
+            background-color: var(--green);
+            color: var(--white);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .result {
+            display: none;
+            font-size: 2rem;
+            font-weight: bold;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 90%;
+            height: 290px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-a {
+            background: linear-gradient(135deg, rgba(255, 71, 87, 0.8), rgba(128, 0, 0, 0.8));
+            color: var(--white);
+        }
+
+        .result-b {
+            background: linear-gradient(135deg, rgba(46, 213, 115, 0.8), rgba(123, 237, 159, 0.8));
+            color: var(--white);
+        }
+
+        .subtext {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        .broken-heart {
+            position: absolute;
+            font-size: 10rem;
+            top: 65%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            z-index: -1;
+            animation: heartBreak 2s forwards;
+        }
+
+        @keyframes heartBreak {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+
+            20% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+
+            40% {
+                transform: translate(-50%, -50%) scale(1) rotate(0deg);
+            }
+
+            60% {
+                transform: translate(-50%, -50%) scale(1) rotate(10deg);
+            }
+
+            80% {
+                transform: translate(-50%, -50%) scale(1) rotate(-10deg);
+            }
+
+            100% {
+                opacity: 0.8;
+                transform: translate(-50%, -50%) scale(1) rotate(0deg);
+            }
+        }
+
+        .goal-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+        .goal-text {
+            position: absolute;
+            bottom: 5%;
+            left: 0;
+            width: 100%;
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--white);
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+            opacity: 0;
+            transform: translateY(50px);
+            animation: goalText 2s 1s forwards;
+        }
+
+        @keyframes goalText {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+e            }
+        }
+
+        .confetti {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .crowd-noise {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: url('https://media3.giphy.com/media/v1.Y2lkPTZjMDliOTUycTRnYTJyazM4enZqNWttM2RoYjVzdGRxZ29lb29rZ2tkdnNzeWNkdyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/GHMRT79pRVnGoRyC3P/giphy.gif') center/cover no-repeat;
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 1s;
+        }
+
+        .var-icon {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            animation: varAnimation 3s forwards;
+            z-index: 5;
+        }
+
+        @keyframes varAnimation {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+
+            20% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+
+            40% {
+                transform: translate(-50%, -50%) scale(1) rotate(0deg);
+            }
+
+            60% {
+                transform: translate(-50%, -50%) scale(1) rotate(10deg);
+            }
+
+            80% {
+                transform: translate(-50%, -50%) scale(1) rotate(-10deg);
+            }
+
+            100% {
+                opacity: 0.8;
+                transform: translate(-50%, -50%) scale(1) rotate(0deg);
+            }
+        }
+
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--black);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            flex-direction: column;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--green);
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-text {
+            color: var(--white);
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 1.8rem;
+            }
+
+            .btn {
+                padding: 1rem 1.5rem;
+                font-size: 1.2rem;
+                min-width: 160px;
+            }
+
+            .result {
+                font-size: 1.5rem;
+                padding: 1.5rem;
+            }
+
+            .subtext {
+                font-size: 1rem;
+            }
+        }
+    </style>
+<style>
+            .ripple {
+                position: absolute;
+                background: rgba(255, 255, 255, 0.4);
+                border-radius: 50%;
+                transform: scale(0);
+                animation: ripple 0.6s linear;
+                pointer-events: none;
+                width: 20px;
+                height: 20px;
+                margin-left: -10px;
+                margin-top: -10px;
+            }
+            
+            @keyframes ripple {
+                to {
+                    transform: scale(10);
+                    opacity: 0;
+                }
+            }
+        </style></head>
+
+<body>
+    <!-- Loading Screen -->
+    <div class="loading" style="opacity: 0; display: none;">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Yükleniyor...</div>
+    </div>
+
+    <!-- Background Elements -->
+    <video autoplay="" muted="" loop="" class="video-bg" id="bgVideo">
+        <source src="https://www.youtube.com/watch?v=7PFRhR0dGNg&amp;t=7s" type="video/mp4">
+    </video>
+
+    <video autoplay="" muted="" loop="" class="goal-video" id="goalVideo">
+        <source src="https://www.youtube.com/watch?v=7PFRhR0dGNg&amp;t=7s" type="video/mp4">
+    </video>
+
+    <div class="crowd-noise" id="crowdNoise"></div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1 class="title">Sevgilin İcardi'yi sevmiyorsa?</h1>
+
+        <div class="buttons" id="buttons">
+            <button class="btn btn-a" onclick="chooseOption('a')">🅰️ Umursamam</button>
+            <button class="btn btn-b" onclick="chooseOption('b')">🅱️ Terk ederim</button>
+        </div>
+
+        <div id="result-a" class="result result-a">
+            ❌ Yanlış. İcardi'ye saygı yoksa aşka da yer yok!
+            <div class="subtext">Bu ilişki OFSAYT...</div>
+            <div class="broken-heart">💔</div>
+        </div>
+
+        <div id="result-b" class="result result-b">
+            ✅ Doğru cevap! Aşkın da futbolun da şifresi: İcardi
+            <div class="goal-text">GOOOOOL!</div>
+            <div class="confetti" id="confetti"></div>
+        </div>
+    </div>
+
+    <!-- Audio Elements -->
+    <audio id="negative-sound" preload="auto">
+        <source src="https://www.soundjay.com/misc/sounds/fail-buzzer-01.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="positive-sound" preload="auto">
+        <source src="https://www.soundjay.com/human/sounds/applause-01.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="crowd-sound" loop="" preload="auto">
+        <source src="https://www.soundjay.com/human/sounds/crowd-cheering-01.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="whistle-sound" preload="auto">
+        <source src="https://www.soundjay.com/human/sounds/referee-whistle-01.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+        // Wait for all assets to load
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.querySelector('.loading').style.opacity = '0';
+                setTimeout(function() {
+                    document.querySelector('.loading').style.display = 'none';
+                }, 200);
+            }, 150); // 1500 yap süre
+        });
+
+        function chooseOption(option) {
+            const buttons = document.getElementById('buttons');
+            const bgVideo = document.getElementById('bgVideo');
+            const goalVideo = document.getElementById('goalVideo');
+            const crowdNoise = document.getElementById('crowdNoise');
+            const negativeSound = document.getElementById('negative-sound');
+            const positiveSound = document.getElementById('positive-sound');
+            const crowdSound = document.getElementById('crowd-sound');
+            const whistleSound = document.getElementById('whistle-sound');
+            
+            buttons.style.display = 'none';
+            bgVideo.pause();
+            
+            if (option === 'a') {
+                // Negative response
+                document.getElementById('result-a').style.display = 'block';
+                negativeSound.play();
+                whistleSound.play();
+                
+                // Effects
+                document.querySelector('.broken-heart').style.animation = 'heartBreak 2s forwards';
+                document.querySelector('.var-icon').style.animation = 'varAnimation 3s forwards';
+                
+                // Darken background
+                document.body.style.backgroundColor = '#400000';
+                
+            } else {
+                // Positive response
+                document.getElementById('result-b').style.display = 'block';
+                positiveSound.play();
+                crowdSound.play();
+                
+                // Show goal video
+                goalVideo.style.opacity = '1';
+                crowdNoise.style.opacity = '0.5';
+                
+                // Confetti effect
+                confetti({
+                    particleCount: 150,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+                
+                // Schedule additional confetti
+                setTimeout(() => {
+                    confetti({
+                        particleCount: 100,
+                        angle: 60,
+                        spread: 55,
+                        origin: { x: 0 }
+                    });
+                    
+                    confetti({
+                        particleCount: 100,
+                        angle: 120,
+                        spread: 55,
+                        origin: { x: 1 }
+                    });
+                }, 500);
+            }
+        }
+        
+        // Add click effect to buttons
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Ripple effect
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple');
+                this.appendChild(ripple);
+                
+                const x = event.clientX - event.target.getBoundingClientRect().left;
+                const y = event.clientY - event.target.getBoundingClientRect().top;
+                
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 1000);
+            });
+        });
+        
+        // Add style for ripple effect
+        const style = document.createElement('style');
+        style.textContent = `
+            .ripple {
+                position: absolute;
+                background: rgba(255, 255, 255, 0.4);
+                border-radius: 50%;
+                transform: scale(0);
+                animation: ripple 0.6s linear;
+                pointer-events: none;
+                width: 20px;
+                height: 20px;
+                margin-left: -10px;
+                margin-top: -10px;
+            }
+            
+            @keyframes ripple {
+                to {
+                    transform: scale(10);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+
+    <footer style="position: fixed; bottom: 0; width: 100%; height: 25px; background-color: #111; color: #aaa; text-align: center; font-size: 13px; line-height: 25px; font-family: 'Open Sans', sans-serif; z-index:99999;">
+        İstek Öneri için ❤️<a href="https://instagram.com/miraceferdal_" style="text-decoration: none; font-weight: 600; color: white; z-index:2000;"> Instagram'a yaz</a>
+    </footer>
+
+
+
+</body></html>
